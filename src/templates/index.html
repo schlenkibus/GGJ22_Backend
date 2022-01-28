@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+
+<a href="/create">Create new Market</a>
+
+<div>
+    {% for market in markets %}
+        <p>{{market}}</p>
+    {% endfor %}
+</div>
+
+</body>
+</html>
