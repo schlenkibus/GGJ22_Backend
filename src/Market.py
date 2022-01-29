@@ -9,8 +9,6 @@ class Market:
     def __init__(self):
         self.timeZero = time.time()
         self.id = uuid.uuid4()
-        self.level = 1
-        self.money = 0
         self.shelf = Shelf(0)
         self.floor = Floor(0)
         self.register = Register(0)
@@ -18,8 +16,12 @@ class Market:
     def getID(self):
         return str(self.id)
 
+    def queueShelfes(self):
+        self.shelf.startAction()
+
+    def stockShelfItem(self):
+        self.shelf.stockItem()
+
     def doUpdate(self):
         shelfInfo = self.shelf.doUpdate()
-        #floorInfo = self.floor.doUpdate()
-        #registerInfo = self.register.doUpdate()
         return shelfInfo    

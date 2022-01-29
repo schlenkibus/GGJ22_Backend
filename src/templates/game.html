@@ -5,15 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Game</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <script>
+        function getUUID() {
+            return document.getElementById('uuid').innerHTML
+        }
+
+        function getUpdate() {
+            httpGetAsync("/game-update/" + getUUID(), (t) => {
+                console.log(t);
+                document.getElementById("info").innerHTML = t;
+            });
+        }
+
+        function httpGetAsync(theUrl, callback) {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function() { 
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                    callback(xmlHttp.responseText);
+            }
+            xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+            xmlHttp.send(null);
+        }
+
+        function orderShelfes() {
+            httpGetAsync("/order-shelf/" + getUUID(), (e) => {
+                document.getElementById('info').innerHTML = e;
+                setTimeout(getUpdate(), 1000);
+            });
+        }
+
+        function foo() {
+            httpGetAsync("/stock-shelf/" + getUUID(), (e) => {
+                document.getElementById('info').innerHTML = e;
+                setTimeout(getUpdate(), 1000);
+            });
+        }
+    </script>
 </head>
 <body>
 
 <div>
-
+<div id=uuid>{{market_id}}</div>
     <h1>Hello Manager of Market {{ market_id }}!</h1>
+
+    <button onclick="getUpdate()">Get Upate!</button>
 
     Here goes the status page and fancy images -> buttons to start restocking/mopping/scanning articles
 
+    <div id=info>
+
+    </div>
+    <div id=actions>
+        <button onclick="orderShelfes()">Stock Shelves</button>
+
+        <button onclick="foo()">put item</button>
+    </div>
 </div>
 
 </body>

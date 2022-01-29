@@ -1,3 +1,4 @@
+from pickletools import markobject
 from flask import Flask, redirect, render_template, send_file
 import json
 from Game import Game
@@ -47,6 +48,26 @@ def gameUpdate(uuid):
         ret = market.doUpdate()
         app.app_ctx_globals_class.state = game
         return ret
+    return ":("
+
+@app.route('/order-shelf/<uuid>')
+def orderShelf(uuid):
+    game = app.app_ctx_globals_class.state
+    market = game.findMarket(uuid)
+    if market != None:
+        market.queueShelfes()
+        app.app_ctx_globals_class.state = game
+        return "OK"
+    return ""
+
+@app.route('/stock-shelf/<uuid>')
+def stockShelf(uuid):
+    game = app.app_ctx_globals_class.state
+    market = game.findMarket(uuid)
+    if market != None:
+        market.stockShelfItem()
+        app.app_ctx_globals_class.state = game
+        return "OK"
     return ""
 
 if __name__ == "__main__":
