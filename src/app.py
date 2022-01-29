@@ -1,4 +1,5 @@
 from flask import Flask, redirect, render_template, send_file
+import json
 from Game import Game
 
 app = Flask(__name__)
@@ -31,6 +32,12 @@ def fourOFour(uuid):
 def list():
     game = app.app_ctx_globals_class.state
     return render_template("index.html", markets=game.getMarkets())
+
+@app.route("/list-raw")
+def listRaw():
+    game = app.app_ctx_globals_class.state
+    markets = game.getMarkets()
+    return json.dumps(markets)
 
 if __name__ == "__main__":
     app.app_ctx_globals_class.state = Game(app)
