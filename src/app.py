@@ -39,6 +39,16 @@ def listRaw():
     markets = game.getMarkets()
     return json.dumps(markets)
 
+@app.route("/game-update/<uuid>")
+def gameUpdate(uuid):
+    game = app.app_ctx_globals_class.state
+    market = game.findMarket(uuid)
+    if market != None:
+        ret = market.doUpdate()
+        app.app_ctx_globals_class.state = game
+        return ret
+    return ""
+
 if __name__ == "__main__":
     app.app_ctx_globals_class.state = Game(app)
     app.run(host='0.0.0.0', port='8000')
