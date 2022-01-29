@@ -1,0 +1,40 @@
+#shelf_overlay {
+    position: absolute;
+    padding-top: 350px;
+    padding-left: 150px;
+    color: red;
+    font-weight: bolder;
+    font-size: xx-large;
+}
+
+.available {
+    background-color: lightgreen;
+}
+
+.shelf_status {
+    font-weight: bolder;
+    font-size: xx-large;
+    background-color: red;
+}
+
+#money_overlay {
+    position: absolute;
+    left: 450px;
+}
+
+#bossMoney {
+    color: lime;
+    font-weight: bolder;
+    font-size: xx-large;
+}
+
+@keyframes spin2 { 100% { transform:rotate(360deg); transform:scale(0%); } }
+@keyframes spin2 { 50% { transform:rotate(180deg); transform:scale(0%);  } }
+@keyframes spin2 { 25% { transform:rotate(180deg); transform:scale(50%);  } }
+@keyframes spin2 { 0% { transform:rotate(0deg); transform:scale(0%);  } }
+@keyframes idle { 100% {} }
+
+#moneyAnimation {
+    color: lime;
+    font-size: xx-large;
+}

@@ -14,6 +14,31 @@
             httpGetAsync("/game-update/" + getUUID(), (t) => {
                 console.log(t);
                 document.getElementById("info").innerHTML = t;
+                j = JSON.parse(t)
+                shelf_time = document.getElementById('shelf_time');
+                shelf_time.innerHTML = j['timer'] + "s"
+
+                shelf_level = document.getElementById('shelf_level');
+                shelf_level.innerHTML = "Level:" + j['level']
+
+                shelf_progress = document.getElementById('shelf_progress');
+                shelf_progress.innerHTML = j['itemsStocked'] + "/" + j['itemsNeeded'];
+
+                shelf_stat = document.getElementById('shelf_status');
+                shelf_stat.innerHTML = j['activated'] == true ? "Running" : "Available";
+                if(j['activated'] == true) {
+                    shelf_stat.classList.remove('available');
+                } else {
+                    shelf_stat.classList.add('available');
+                }
+
+                bossMoney = document.getElementById('bossMoney')
+                newStr = j['bossMoney'] + "$"
+                if(newStr != bossMoney.innerHTML && newStr != "0$")
+                {
+                    bossMoney.innerHTML = newStr;
+                    document.getElementById('moneyAnimation').style.animation="spin2 1s alternate linear infinite";
+                }
             });
         }
 
@@ -59,6 +84,17 @@
         <button onclick="orderShelfes()">Stock Shelves</button>
         <button onclick="foo()">put item</button>
     </div>
+    <div id=money_overlay>
+        <p id=bossMoney></p>
+        <div id=moneyAnimation>$$$$$$$</div>
+    </div>
+    <div id=shelf_overlay class=fancy>
+        <button id=shelf_status onclick="orderShelfes()"></button>
+        <p id=shelf_time></p>
+        <p id=shelf_level></p>
+        <p id=shelf_progress></p>
+    </div>
+    <img src="/static/map.png">
 </div>
 
 </body>
