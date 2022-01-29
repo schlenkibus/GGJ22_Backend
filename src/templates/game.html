@@ -32,6 +32,24 @@
                     shelf_stat.classList.add('available');
                 }
 
+                reg_time = document.getElementById('register_time');
+                reg_time.innerHTML = j['register_timer'] + "s"
+
+                register_level = document.getElementById('register_level');
+                register_level.innerHTML = "Level:" + j['register_level']
+
+                register_progress = document.getElementById('register_progress');
+                register_progress.innerHTML = j['register_itemsStocked'] + "/" + j['register_itemsNeeded'];
+
+                register_stat = document.getElementById('register_status');
+                register_stat.innerHTML = j['register_activated'] == true ? "Running" : "Available";
+                if(j['register_activated'] == true) {
+                    register_stat.classList.remove('available');
+                } else {
+                    register_stat.classList.add('available');
+                }
+
+
                 bossMoney = document.getElementById('bossMoney')
                 newStr = j['bossMoney'] + "$"
                 bossMoney.innerHTML = newStr;
@@ -50,15 +68,25 @@
 
         function orderShelfes() {
             httpGetAsync("/order-shelf/" + getUUID(), (e) => {
-                document.getElementById('info').innerHTML = e;
-                setTimeout(getUpdate(), 1000);
+                getUpdate();
+            });
+        }
+
+        function orderRegister() {
+            httpGetAsync("/order-register/" + getUUID(), (e) => {
+                getUpdate();
+            });
+        }
+
+        function scanItem() {
+            httpGetAsync('/scan-item/' + getUUID(), (e) => {
+                getUpdate();
             });
         }
 
         function foo() {
             httpGetAsync("/stock-shelf/" + getUUID(), (e) => {
-                document.getElementById('info').innerHTML = e;
-                setTimeout(getUpdate(), 1000);
+                getUpdate();
             });
         }
     </script>
@@ -78,7 +106,8 @@
     </div>
     <div id=actions>
         <button onclick="orderShelfes()">Stock Shelves</button>
-        <button onclick="foo()">put item</button>
+        <button onclick="foo()">stock shelf</button>
+        <button onclick="scanItem()">scan item</button>
     </div>
     <div id=money_overlay>
         <p id=bossMoney></p>
@@ -89,6 +118,12 @@
         <p id=shelf_time></p>
         <p id=shelf_level></p>
         <p id=shelf_progress></p>
+    </div>
+    <div id=register_overlay class=fancy>
+        <button id=register_status onclick="orderRegister()"></button>
+        <p id=register_time></p>
+        <p id=register_level></p>
+        <p id=register_progress></p>
     </div>
     <img src="/static/map.png">
 </div>

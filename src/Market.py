@@ -25,11 +25,18 @@ class Market:
     def stockShelfItem(self):
         self.shelf.stockItem()
 
+    def orderRegister(self):
+        self.register.startAction()
+
+    def scanItem(self):
+        self.register.scanItem()
+
     def doUpdate(self):
+        registerInfo = json.loads(self.register.doUpdate())
         shelfInfo = json.loads(self.shelf.doUpdate())
         passed = time.time() - self.timeZero
         self.playerMoney = passed * self.playerMoneyPerSec
-        self.bossMoney = self.shelf.getBossGains()
+        self.bossMoney = self.shelf.getBossGains() + self.register.getBossGains()
         shelfInfo['playerMoney'] = self.playerMoney
         shelfInfo['bossMoney'] = self.bossMoney
-        return shelfInfo
+        return json.dumps(shelfInfo)[:-1] + ', ' + json.dumps(registerInfo)[1::]

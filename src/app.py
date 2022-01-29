@@ -70,6 +70,26 @@ def stockShelf(uuid):
         return "OK"
     return ""
 
+@app.route('/order-register/<uuid>')
+def orderRegister(uuid):
+    game = app.app_ctx_globals_class.state
+    market = game.findMarket(uuid)
+    if market != None:
+        market.orderRegister()
+        app.app_ctx_globals_class.state = game
+        return "OK"
+    return ""
+
+@app.route('/scan-item/<uuid>')
+def scanItem(uuid):
+    game = app.app_ctx_globals_class.state
+    market = game.findMarket(uuid)
+    if market != None:
+        market.scanItem()
+        app.app_ctx_globals_class.state = game
+        return "OK"
+    return ""
+
 if __name__ == "__main__":
     app.app_ctx_globals_class.state = Game(app)
     app.run(host='0.0.0.0', port='8000')

@@ -1,7 +1,7 @@
 #shelf_overlay {
     position: absolute;
-    padding-top: 350px;
-    padding-left: 150px;
+    top: 493px;
+    left: 150px;
     color: red;
     font-weight: bolder;
     font-size: xx-large;
@@ -38,4 +38,13 @@
     color: lime;
     font-size: xx-large;
     animation: spin2 1s alternate linear infinite"
+}
+
+#register_overlay {
+    position: absolute;
+    left: 587px;
+    color: red;
+    font-weight: bolder;
+    font-size: xx-large;
+    top: 500px;
 }
