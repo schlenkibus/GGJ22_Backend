@@ -10,10 +10,12 @@ class Shelf:
         self.timeCreated = time.time()
         self.timeOfLastUpdate = time.time()
         self.timerStarted = None
-        self.itemsNeeded = 10
+        self.itemsNeeded = 20
         self.itemsStocked = 0
         self.timerTime = 0
-        self.level = 1
+        self.level = -1
+        self.bossGainedTotal = 0.0
+        self.resetValues(1)
 
     def doUpdate(self):
         lastUpdate = self.timeOfLastUpdate
@@ -31,38 +33,47 @@ class Shelf:
             self.timer -= elapsed
             self.checkWinConditions(now)
 
+    def getBossGains(self):
+        return self.bossGainedTotal
+
     def startAction(self):
         if not self.activated:
-            self.itemsNeeded = 10 * self.level
-            self.itemsStocked = 0
-            self.timerTime = 60
             self.activated = True
-            self.timer = 60
             self.timerStarted = time.time()
+
+    def resetValues(self, newLevel):
+        if newLevel != -1 and self.level != -1:
+            self.bossGainedTotal += (self.level * 100)
+        else:
+            self.level = 1
+
+        self.level = newLevel    
+        self.itemsNeeded = 10 * self.level
+        self.itemsStocked = 0
+        self.timerTime = 60
+        self.timer = 60
 
     def stockItem(self):
         if self.activated:
             self.itemsStocked += 1
+            self.doUpdate()
 
     def checkWinConditions(self, now):
         if self.activated:
             timeStillRunning = self.timerStarted + self.timerTime > now
-            actionDone = self.itemsStocked > self.itemsNeeded
+            actionDone = self.itemsStocked >= self.itemsNeeded
 
             if timeStillRunning and actionDone:
                 self.activated = False
-                self.level += 1
+                self.resetValues(self.level + 1)
 
             if not timeStillRunning and actionDone:
                 self.activated = False
-                self.level += 1
+                self.resetValues(self.level + 1)
 
             if not timeStillRunning and not actionDone:
                 self.activated = False
-                self.level = -1 #indicates GameOver
+                self.resetValues(-1)
 
             if not self.activated:
-                self.itemsNeeded = 0
-                self.itemsStocked = 0
                 self.timerStarted = None
-                self.timerTime = 0

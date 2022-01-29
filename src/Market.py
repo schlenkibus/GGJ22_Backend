@@ -12,6 +12,9 @@ class Market:
         self.shelf = Shelf(0)
         self.floor = Floor(0)
         self.register = Register(0)
+        self.playerMoney = 0.0
+        self.bossMoney = 0.0
+        self.playerMoneyPerSec = 50.0 / 3600
 
     def getID(self):
         return str(self.id)
@@ -23,5 +26,10 @@ class Market:
         self.shelf.stockItem()
 
     def doUpdate(self):
-        shelfInfo = self.shelf.doUpdate()
-        return shelfInfo    
+        shelfInfo = json.loads(self.shelf.doUpdate())
+        passed = time.time() - self.timeZero
+        self.playerMoney = passed * self.playerMoneyPerSec
+        self.bossMoney = self.shelf.getBossGains()
+        shelfInfo['playerMoney'] = self.playerMoney
+        shelfInfo['bossMoney'] = self.bossMoney
+        return shelfInfo
