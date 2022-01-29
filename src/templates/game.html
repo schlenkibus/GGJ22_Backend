@@ -34,11 +34,7 @@
 
                 bossMoney = document.getElementById('bossMoney')
                 newStr = j['bossMoney'] + "$"
-                if(newStr != bossMoney.innerHTML && newStr != "0$")
-                {
-                    bossMoney.innerHTML = newStr;
-                    document.getElementById('moneyAnimation').style.animation="spin2 1s alternate linear infinite";
-                }
+                bossMoney.innerHTML = newStr;
             });
         }
 

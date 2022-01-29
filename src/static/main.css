@@ -37,4 +37,5 @@
 #moneyAnimation {
     color: lime;
     font-size: xx-large;
+    animation: spin2 1s alternate linear infinite"
 }
