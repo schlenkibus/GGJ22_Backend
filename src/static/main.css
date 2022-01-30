@@ -28,6 +28,10 @@
     font-size: xx-large;
 }
 
+#actions {
+    display: none;
+}
+
 @keyframes spin2 { 100% { transform:rotate(360deg); transform:scale(0%); } }
 @keyframes spin2 { 50% { transform:rotate(180deg); transform:scale(0%);  } }
 @keyframes spin2 { 25% { transform:rotate(180deg); transform:scale(50%);  } }

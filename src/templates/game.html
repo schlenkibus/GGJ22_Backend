@@ -105,17 +105,15 @@
 <body>
 
 <div>
-<div id=uuid>{{market_id}}</div>
     <h1>Hello Manager of Market {{ market_id }}!</h1>
 
-    <button onclick="getUpdate()">Get Upate!</button>
-
-    Here goes the status page and fancy images -> buttons to start restocking/mopping/scanning articles
-
-    <div id=info>
-
-    </div>
     <div id=actions>
+        <div id=uuid>{{market_id}}</div>
+        <button onclick="getUpdate()">Get Upate!</button>
+        Here goes the status page and fancy images -> buttons to start restocking/mopping/scanning articles
+        <div id=info>
+
+        </div>
         <button onclick="orderShelfes()">Stock Shelves</button>
         <button onclick="foo()">stock shelf</button>
         <button onclick="scanItem()">scan item</button>
@@ -148,5 +146,5 @@
 
 <script>
     setInterval(getUpdate, 1000);
-    //setInterval(getPlayerPos, 1000);
+    setInterval(getPlayerPos, 1000);
 </script>
