@@ -5,10 +5,6 @@ from Game import Game
 
 app = Flask(__name__)
 
-@app.route("/")
-def hello():
-    return "Hello World!"
-
 @app.route("/create")
 def create_market():
     game = app.app_ctx_globals_class.state
@@ -29,7 +25,7 @@ def game(uuid):
 def fourOFour(uuid):
     return render_template("404.html", id = uuid)
 
-@app.route("/list")
+@app.route("/")
 def list():
     game = app.app_ctx_globals_class.state
     return render_template("index.html", markets=game.getMarkets())
