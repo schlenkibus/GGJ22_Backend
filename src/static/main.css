@@ -48,3 +48,16 @@
     font-size: xx-large;
     top: 500px;
 }
+
+#player_overlay {
+    position: absolute;
+}
+
+#player {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background-color: gold;
+    min-width: 20px;
+    min-height: 20px;
+}

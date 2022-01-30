@@ -56,6 +56,17 @@
             });
         }
 
+        function getPlayerPos() {
+            httpGetAsync("/get-player-position/" + getUUID(), (t) => {
+                j = JSON.parse(t)
+                console.log(j);
+                
+                player = document.getElementById('player');
+                player.style.left = 1024 * j['x'] + 'px';
+                player.style.top = 815 * j['y'] + 'px';
+            });
+        }
+
         function httpGetAsync(theUrl, callback) {
             var xmlHttp = new XMLHttpRequest();
             xmlHttp.onreadystatechange = function() { 
@@ -125,6 +136,10 @@
         <p id=register_level></p>
         <p id=register_progress></p>
     </div>
+    <div id=player_overlay>
+        <div id=player>
+            </div>
+    </div>
     <img src="/static/map.png">
 </div>
 
@@ -133,4 +148,5 @@
 
 <script>
     setInterval(getUpdate, 1000);
+    setInterval(getPlayerPos, 1000);
 </script>

@@ -15,6 +15,8 @@ class Market:
         self.playerMoney = 0.0
         self.bossMoney = 0.0
         self.playerMoneyPerSec = 50.0 / 3600
+        self.playerPosX = 0
+        self.playerPosY = 0
 
     def getID(self):
         return str(self.id)
@@ -30,6 +32,13 @@ class Market:
 
     def scanItem(self):
         self.register.scanItem()
+
+    def updatePlayerPos(self, x, y):
+        self.playerPosX = x
+        self.playerPosY = y
+
+    def getPlayerPos(self):
+        return {'x': self.playerPosX, 'y': self.playerPosY}
 
     def doUpdate(self):
         registerInfo = json.loads(self.register.doUpdate())

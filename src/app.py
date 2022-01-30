@@ -1,5 +1,5 @@
 from pickletools import markobject
-from flask import Flask, redirect, render_template, send_file
+from flask import Flask, redirect, render_template, send_file, request
 import json
 from Game import Game
 
@@ -88,6 +88,24 @@ def scanItem(uuid):
         market.scanItem()
         app.app_ctx_globals_class.state = game
         return "OK"
+    return ""
+
+@app.route('/player-position/<uuid>/<x>/<y>')
+def updatePlayerPos(uuid, x, y):
+    game = app.app_ctx_globals_class.state
+    market = game.findMarket(uuid)
+    if market != None:
+        market.updatePlayerPos(x, y)
+        app.app_ctx_globals_class.state = game
+        return "OK"
+    return ""
+
+@app.route('/get-player-position/<uuid>')
+def getPos(uuid):
+    game = app.app_ctx_globals_class.state
+    market = game.findMarket(uuid)
+    if market != None:
+        return market.getPlayerPos()
     return ""
 
 if __name__ == "__main__":
